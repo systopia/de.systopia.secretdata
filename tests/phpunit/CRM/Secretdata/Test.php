@@ -63,8 +63,7 @@ class CRM_Secretdata_Test extends \PHPUnit\Framework\TestCase implements Headles
   }
 
   public function testIsThereOurTable():void {
-    \CRM_Core_DAO::executeQuery('select * from civicrm_secretdata');
-    $this->assertEquals(1,1);
+      $this->assertEquals(true,\CRM_Core_DAO::checkTableExists('civicrm_secretdata'));
   }
 
 }
