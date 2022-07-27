@@ -7,7 +7,7 @@ use Civi\Test\TransactionalInterface;
 use Civi\Test\CiviEnvBuilder;
 
 /**
- * FIXME - Add test description.
+ * Test the initial setup of our Database with the upgrader
  *
  * Tips:
  *  - With HookInterface, you may implement CiviCRM hooks directly in the test class.
@@ -20,7 +20,7 @@ use Civi\Test\CiviEnvBuilder;
  *
  * @group headless
  */
-class CRM_Secretdata_Test extends \PHPUnit\Framework\TestCase implements HeadlessInterface, HookInterface, TransactionalInterface {
+class CRM_Upgrader_Test extends \PHPUnit\Framework\TestCase implements HeadlessInterface, TransactionalInterface {
 
   /**
    * Setup used when HeadlessInterface is implemented.
@@ -42,32 +42,21 @@ class CRM_Secretdata_Test extends \PHPUnit\Framework\TestCase implements Headles
   public function setUp():void {
     parent::setUp();
     $this->upgrader = CRM_Secretdata_Upgrader_Base::instance();
-    $this->upgrader->onInstall();
 
   }
 
+  /*
   public function tearDown():void {
     parent::tearDown();
+  }*/
+
+
+  public function testIsThereOurTable(): void {
+
+      $this->upgrader->onInstall();
+      $this->assertEquals(true, \CRM_Core_DAO::checkTableExists('civicrm_secretdata'));
+      $dao = \CRM_Core_DAO::executeQuery('SELECT * FROM civicrm_secretdata;');
+      $this->assertEquals("string",$dao->fields());
+      # $this->assertEquals( );
   }
-
-  /**
-   * Example: Test that a version is returned.
-   */
-  public function testWellFormedVersion():void {
-    $this->assertNotEmpty(E::SHORT_NAME);
-    $this->assertRegExp('/^([0-9\.]|alpha|beta)*$/', \CRM_Utils_System::version());
-  }
-
-  /**
-   * Example: Test that we're using a fake CMS.
-   */
-  public function testWellFormedUF():void {
-    $this->assertEquals('UnitTests', CIVICRM_UF);
-  }
-
-  public function testIsThereOurTable():void {
-
-      $this->assertEquals(true,\CRM_Core_DAO::checkTableExists('civicrm_secretdata'));
-  }
-
 }
