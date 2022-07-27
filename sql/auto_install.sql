@@ -1,7 +1,7 @@
 
 SET FOREIGN_KEY_CHECKS=0;
 
-DROP TABLE IF EXISTS `civicrm_eck_entity_type`;
+DROP TABLE IF EXISTS `civicrm_secretdata`;
 
 SET FOREIGN_KEY_CHECKS=1;
 -- /*******************************************************

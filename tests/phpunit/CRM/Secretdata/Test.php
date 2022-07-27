@@ -41,6 +41,9 @@ class CRM_Secretdata_Test extends \PHPUnit\Framework\TestCase implements Headles
 
   public function setUp():void {
     parent::setUp();
+    $this->upgrader = CRM_Secretdata_Upgrader_Base::instance();
+    $this->upgrader->onInstall();
+
   }
 
   public function tearDown():void {
@@ -63,8 +66,7 @@ class CRM_Secretdata_Test extends \PHPUnit\Framework\TestCase implements Headles
   }
 
   public function testIsThereOurTable():void {
-      $upgrader = CRM_Secretdata_Upgrader_Base::instance();
-      $upgrader->onInstall();
+
       $this->assertEquals(true,\CRM_Core_DAO::checkTableExists('civicrm_secretdata'));
   }
 
