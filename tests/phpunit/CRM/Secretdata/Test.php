@@ -55,8 +55,14 @@ class CRM_Upgrader_Test extends \PHPUnit\Framework\TestCase implements HeadlessI
 
       $this->upgrader->onInstall();
       $this->assertEquals(true, \CRM_Core_DAO::checkTableExists('civicrm_secretdata'));
-      $dao = \CRM_Core_DAO::executeQuery('SELECT * FROM civicrm_secretdata;');
-      $this->assertEquals("string",$dao->fields());
+      $result = \CRM_Core_DAO::executeQuery('DESCRIBE civicrm_secretdata;');
+      $expected = ["id","name1"];
+      foreach ($expected as $field){
+        $result->fetch();
+        $this->assertEquals($field,$result->Field);
+    };
+
       # $this->assertEquals( );
+
   }
 }
