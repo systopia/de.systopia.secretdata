@@ -79,6 +79,13 @@ function secretdata_civicrm_entityTypes(&$entityTypes) {
   _secretdata_civix_civicrm_entityTypes($entityTypes);
 }
 
+function secretdata_civicrm_permission(&$permissions) {
+  $permissions['access secret data'] = [
+    E::ts('Access Secret Data'),
+    E::ts('Grants the necessary permissions to read and edit the special fields provided by the secret data extension.'),
+  ];
+}
+
 // --- Functions below this ship commented out. Uncomment as required. ---
 
 /**
