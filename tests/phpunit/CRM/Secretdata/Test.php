@@ -72,4 +72,16 @@ class CRM_Upgrader_Test extends TestCase implements HeadlessInterface, Transacti
     }
   }
 
+  public function testPermissionsAvailable(): void {
+    $this->upgrader->onInstall();
+
+    // extract permission from API4 and test if our permissions exists
+    $permissions = \Civi\Api4\Permission::get()->execute();
+    $permarray = [];
+    foreach ($permissions as $permission) {
+      $permarray[] = $permission['name'];
+    }
+    $this->assertContains('access secret data', $permarray, "Permission not available.");
+
+  }
 }
