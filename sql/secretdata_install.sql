@@ -18,7 +18,8 @@ SET FOREIGN_KEY_CHECKS=1;
 -- *
 -- *******************************************************/
 CREATE TABLE `civicrm_secretdata` (
-                                         `contact_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID of contact',
+                                         id serial,
+                                         `contact_id` int(10) unsigned NOT NULL,
                                          `name0` varchar(255) NOT NULL,
                                          `content0` varchar(255) NOT NULL,
                                          `name1` varchar(255) NOT NULL,

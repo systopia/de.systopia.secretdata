@@ -61,7 +61,7 @@ class CRM_Upgrader_Test extends TestCase implements HeadlessInterface, Transacti
     $this->upgrader->onInstall();
     $this->assertEquals(TRUE, CRM_Core_DAO::checkTableExists('civicrm_secretdata'));
     $result = CRM_Core_DAO::executeQuery('DESCRIBE civicrm_secretdata;');
-    $expected = ["contact_id"];
+    $expected = ["id","contact_id"];
     for ($i = 0; $i <= 9; $i++) {
       $expected[] = "name" . $i;
       $expected[] = "content" . $i;
