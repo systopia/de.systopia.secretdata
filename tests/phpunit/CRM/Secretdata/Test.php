@@ -84,4 +84,16 @@ class CRM_Upgrader_Test extends TestCase implements HeadlessInterface, Transacti
     $this->assertContains('access secret data', $permarray, "Permission not available.");
 
   }
+
+  public function testOptionGroupAvailable(): void {
+
+    $optionGroups = \Civi\Api4\OptionGroup::get()->execute();
+    $ogarray =[];
+    foreach ($optionGroups as $optionGroup) {
+      $ogarray[] = $optionGroup['name'];
+    }
+    # var_dump($ogarray);
+    $this->assertContains('secret_data_fields', $ogarray, "Option Group not available.");
+  }
+
 }
