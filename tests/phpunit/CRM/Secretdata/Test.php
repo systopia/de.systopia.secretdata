@@ -77,12 +77,7 @@ class CRM_Upgrader_Test extends TestCase implements HeadlessInterface, Transacti
     $this->upgrader->onInstall();
     $this->upgrader->onEnable();
     // extract permission from API4 and test if our permissions exists
-    $permissions = \Civi\Api4\Permission::get()->execute();
-    $permarray = [];
-    foreach ($permissions as $permission) {
-      $permarray[] = $permission['name'];
-    }
-    # var_dump($permarray);
+    $permarray = \Civi\Api4\Permission::get()->execute()->column('name');
     $this->assertContains('access secret data', $permarray, "Permission not available.");
 
   }
@@ -90,13 +85,7 @@ class CRM_Upgrader_Test extends TestCase implements HeadlessInterface, Transacti
   public function testOptionGroupAvailable(): void {
     $this->upgrader->onInstall();
     $this->upgrader->onEnable();
-    $optionGroups = \Civi\Api4\OptionGroup::get()->execute();
-    # var_dump($optionGroups);
-    $ogarray =[];
-    foreach ($optionGroups as $optionGroup) {
-      $ogarray[] = $optionGroup['name'];
-    }
-    # var_dump($ogarray);
+    $ogarray = \Civi\Api4\OptionGroup::get()->execute()->column('name');
     $this->assertContains('secretdata_fieldnames', $ogarray, "Option Group not available.");
 
   }
