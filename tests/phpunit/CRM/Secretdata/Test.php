@@ -40,9 +40,13 @@ class CRM_Upgrader_Test extends TestCase implements HeadlessInterface, Transacti
    * @throws \CRM_Extension_Exception_ParseException
    */
   public function setUpHeadless(): CiviEnvBuilder {
-    return Test::headless()
+    # var_dump(__DIR__);
+    $headless =  Test::headless()
+    #  ->installMe("/var/www/civicrm_env/test/drupal/web/sites/default/files/civicrm/ext/de.systopia.secretdata/")
       ->installMe(__DIR__)
       ->apply();
+    # var_dump($headless);
+    return $headless;
   }
 
   public function setUp(): void {
@@ -59,7 +63,7 @@ class CRM_Upgrader_Test extends TestCase implements HeadlessInterface, Transacti
 
   public function testIsThereOurTable(): void {
 
-    $this->upgrader->onInstall();
+    # $this->upgrader->onInstall();
     $this->assertEquals(TRUE, CRM_Core_DAO::checkTableExists('civicrm_secretdata'));
     $result = CRM_Core_DAO::executeQuery('DESCRIBE civicrm_secretdata;');
     $expected = ["id","contact_id"];
@@ -74,8 +78,8 @@ class CRM_Upgrader_Test extends TestCase implements HeadlessInterface, Transacti
   }
 
   public function testPermissionsAvailable(): void {
-    $this->upgrader->onInstall();
-    $this->upgrader->onEnable();
+    # $this->upgrader->onInstall();
+    # $this->upgrader->onEnable();
     // extract permission from API4 and test if our permissions exists
     $permarray = \Civi\Api4\Permission::get()->execute()->column('name');
     $this->assertContains('access secret data', $permarray, "Permission not available.");
@@ -83,10 +87,16 @@ class CRM_Upgrader_Test extends TestCase implements HeadlessInterface, Transacti
   }
 
   public function testOptionGroupAvailable(): void {
-    $this->upgrader->onInstall();
-    $this->upgrader->onEnable();
+    # $this->upgrader->onInstall();
+    # $this->upgrader->onEnable();
     $ogarray = \Civi\Api4\OptionGroup::get()->execute()->column('name');
     $this->assertContains('secretdata_fieldnames', $ogarray, "Option Group not available.");
+
+    $optionValues = \Civi\Api4\OptionValue::get()
+      ->addWhere('option_group_id:name', '=', 'secretdata_fieldnames')
+      ->execute();
+
+    var_dump($optionValues);
 
   }
 
