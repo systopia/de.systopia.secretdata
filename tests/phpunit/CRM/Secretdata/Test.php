@@ -86,15 +86,16 @@ class CRM_Upgrader_Test extends TestCase implements HeadlessInterface, Transacti
   }
 
   public function testOptionGroupAvailable(): void {
-
+    $this->upgrader->onInstall();
+    $this->upgrader->onEnable();
     $optionGroups = \Civi\Api4\OptionGroup::get()->execute();
     # var_dump($optionGroups);
     $ogarray =[];
     foreach ($optionGroups as $optionGroup) {
       $ogarray[] = $optionGroup['name'];
     }
-    var_dump($ogarray);
-    $this->assertContains('secret_data_fields', $ogarray, "Option Group not available.");
+    # var_dump($ogarray);
+    $this->assertContains('secretdata_fieldnames', $ogarray, "Option Group not available.");
   }
 
 }
