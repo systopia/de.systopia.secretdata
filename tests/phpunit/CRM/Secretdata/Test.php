@@ -7,6 +7,7 @@ use Civi\Test\HookInterface;
 use Civi\Test\TransactionalInterface;
 use Civi\Test\CiviEnvBuilder;
 use PHPUnit\Framework\TestCase;
+use CRM\Secretdata\Upgrader\Upgrader;
 
 /**
  * Test the initial setup of our Database with the upgrader
@@ -74,13 +75,14 @@ class CRM_Upgrader_Test extends TestCase implements HeadlessInterface, Transacti
 
   public function testPermissionsAvailable(): void {
     $this->upgrader->onInstall();
-
+    $this->upgrader->onEnable();
     // extract permission from API4 and test if our permissions exists
     $permissions = \Civi\Api4\Permission::get()->execute();
     $permarray = [];
     foreach ($permissions as $permission) {
       $permarray[] = $permission['name'];
     }
+    # var_dump($permarray);
     $this->assertContains('access secret data', $permarray, "Permission not available.");
 
   }
@@ -96,6 +98,7 @@ class CRM_Upgrader_Test extends TestCase implements HeadlessInterface, Transacti
     }
     # var_dump($ogarray);
     $this->assertContains('secretdata_fieldnames', $ogarray, "Option Group not available.");
+
   }
 
 }

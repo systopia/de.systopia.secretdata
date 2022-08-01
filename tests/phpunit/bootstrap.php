@@ -11,7 +11,7 @@ $loader->add('CRM_', [__DIR__ . '/../..', __DIR__]);
 $loader->addPsr4('Civi\\', [__DIR__ . '/../../Civi', __DIR__ . '/Civi']);
 $loader->add('api_', [__DIR__ . '/../..', __DIR__]);
 $loader->addPsr4('api\\', [__DIR__ . '/../../api', __DIR__ . '/api']);
-
+$loader->addClassMap([CRM_Secretdata_ExtensionUtil::class => __DIR__ . '/../../secretdata.civix.php']);
 $loader->register();
 
 /**
