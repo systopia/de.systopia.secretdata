@@ -63,12 +63,12 @@ class CRM_Upgrader_Test extends TestCase implements HeadlessInterface, Transacti
 
   public function testIsThereOurTable(): void {
 
-    # $this->upgrader->onInstall();
+    $this->upgrader->onInstall();
     $this->assertEquals(TRUE, CRM_Core_DAO::checkTableExists('civicrm_secretdata'));
     $result = CRM_Core_DAO::executeQuery('DESCRIBE civicrm_secretdata;');
     $expected = ["id","contact_id"];
     for ($i = 0; $i <= 9; $i++) {
-      $expected[] = "name" . $i;
+      # $expected[] = "name" . $i;
       $expected[] = "content" . $i;
     }
     foreach ($expected as $field) {
@@ -96,7 +96,7 @@ class CRM_Upgrader_Test extends TestCase implements HeadlessInterface, Transacti
       ->addWhere('option_group_id:name', '=', 'secretdata_fieldnames')
       ->execute();
 
-    var_dump($optionValues);
+    # var_dump($optionValues);
 
   }
 
