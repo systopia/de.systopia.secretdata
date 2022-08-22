@@ -4,7 +4,7 @@ return [
     'name' => 'OptionGroup_secretdata_fieldnames',
     'entity' => 'OptionGroup',
     'cleanup' => 'always',
-    'update' => 'unmodified',
+    'update' => 'always',
     'params' => [
       'version' => 4,
       'values' => [
@@ -18,5 +18,26 @@ return [
       ],
     ],
     'match' => ['name'],
+  ],
+  [
+    'name' => 'OptionGroup_secretdata_fieldnames_OptionValue_0',
+    'entity' => 'OptionValue',
+    'cleanup' => 'always',
+    'update' => 'always',
+    'params' => [
+        'version' => 4,
+        'values' => [
+            'option_group_id.name' => 'secretdata_fieldnames',
+            'label' => 'name0',#E::ts('name0'),
+            'value' => 'name0',
+            'name' => 'name0',
+            'is_reserved' => TRUE,
+            'is_active' => TRUE,
+            'filter' => 0,
+            'is_default' => TRUE,
+            'description' => 'no info',#E::ts('no information'),
+        ],
+    ],
+    'match' => ['option_group_id.name','name'],
   ],
 ];

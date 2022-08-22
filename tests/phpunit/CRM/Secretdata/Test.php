@@ -78,7 +78,7 @@ class CRM_Upgrader_Test extends TestCase implements HeadlessInterface, Transacti
   }
 
   public function testPermissionsAvailable(): void {
-    # $this->upgrader->onInstall();
+    $this->upgrader->onInstall();
     # $this->upgrader->onEnable();
     // extract permission from API4 and test if our permissions exists
     $permarray = \Civi\Api4\Permission::get()->execute()->column('name');
@@ -87,17 +87,31 @@ class CRM_Upgrader_Test extends TestCase implements HeadlessInterface, Transacti
   }
 
   public function testOptionGroupAvailable(): void {
-    # $this->upgrader->onInstall();
+    $this->upgrader->onInstall();
+
+    /*  $mgdFiles = \CRM_Utils_File::findFiles(__DIR__ . '/managed', '*.mgd.php');
+      $entities = [];
+      foreach ($mgdFiles as $mgdFile) {
+        $entities[] = require $mgdFile;
+      }
+      \CRM_Utils_Hook::managed($entities);
+  */
     # $this->upgrader->onEnable();
     $ogarray = \Civi\Api4\OptionGroup::get()->execute()->column('name');
+    #  var_dump($ogarray);
     $this->assertContains('secretdata_fieldnames', $ogarray, "Option Group not available.");
 
-    $optionValues = \Civi\Api4\OptionValue::get()
-      ->addWhere('option_group_id:name', '=', 'secretdata_fieldnames')
-      ->execute();
+    $optionValueNames = \Civi\Api4\OptionValue::get()
+      ->addWhere('option_group_id.name', '=', 'secretdata_fieldnames')
+      # ->addWhere('option_group_id.name', '=', 'activity_type')
+      ->execute()->column('name');
 
-    # var_dump($optionValues);
-
+    #var_dump($optionValues->column('name'));
+    #print("XXXXX");
+    # var_dump($optionValues[0]['storage'])  ;
+    for ($i = 0; $i <= 9; $i++) {
+      $this->assertContains('name'.$i, $optionValueNames, "missing Option Value name".$i);
+    }
   }
 
 }
