@@ -1,5 +1,33 @@
 <?php
-return [
+
+$optionvalues = [];
+for ($i = 0; $i <= 9; $i++) {
+  $name = 'name'.$i;
+  $optionvalues[] =
+  [
+    'name' => 'OptionGroup_secretdata_fieldnames_OptionValue_' . $i,
+    'entity' => 'OptionValue',
+    'cleanup' => 'always',
+    'update' => 'always',
+    'params' => [
+      'version' => 4,
+      'values' => [
+        'option_group_id.name' => 'secretdata_fieldnames',
+        'label' => $name,#E::ts('name0'),
+        'value' => $name,
+        'name' => $name,
+        'is_reserved' => TRUE,
+        'is_active' => TRUE,
+        'filter' => 0,
+        'is_default' => TRUE,
+        'description' => 'no info',#E::ts('no information'),
+      ],
+    ],
+    'match' => ['option_group_id.name','name'],
+  ];
+}
+
+array_unshift($optionvalues,
   [
     'name' => 'OptionGroup_secretdata_fieldnames',
     'entity' => 'OptionGroup',
@@ -18,26 +46,7 @@ return [
       ],
     ],
     'match' => ['name'],
-  ],
-  [
-    'name' => 'OptionGroup_secretdata_fieldnames_OptionValue_0',
-    'entity' => 'OptionValue',
-    'cleanup' => 'always',
-    'update' => 'always',
-    'params' => [
-        'version' => 4,
-        'values' => [
-            'option_group_id.name' => 'secretdata_fieldnames',
-            'label' => 'name0',#E::ts('name0'),
-            'value' => 'name0',
-            'name' => 'name0',
-            'is_reserved' => TRUE,
-            'is_active' => TRUE,
-            'filter' => 0,
-            'is_default' => TRUE,
-            'description' => 'no info',#E::ts('no information'),
-        ],
-    ],
-    'match' => ['option_group_id.name','name'],
-  ],
-];
+  ]
+);
+
+return $optionvalues;
