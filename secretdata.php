@@ -88,6 +88,24 @@ function secretdata_civicrm_permission(&$permissions) {
   ];
 }
 
+function secretdata_civicrm_tabset($tabsetName, &$tabs, $context)
+{
+  switch ($tabsetName) {
+    case 'civicrm/contact/view':
+    # case 'civicrm/eck/entity':
+      CRM_Resource_UI::addResourceTab($tabs, $tabsetName, $context);
+      return;
+
+/*    case 'civicrm/event/manage':
+      CRM_Resource_UI::addEventResourceDemandTab($tabs, $context);
+      return;
+*/
+    default:
+      return;
+  }
+}
+
+
 // --- Functions below this ship commented out. Uncomment as required. ---
 
 /**
