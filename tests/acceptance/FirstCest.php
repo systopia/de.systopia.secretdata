@@ -1,5 +1,7 @@
 <?php
 
+require 'tests/secrets.php'; // TODO: should be better in a json file or something similar
+
 class FirstCest
 {
     public function _before(AcceptanceTester $I)
@@ -14,10 +16,13 @@ class FirstCest
 
     public function loginPageWorks(AcceptanceTester $I)
     {
+      global $secret_password, $secret_user;
+
+      print "pass: ".$secret_password.", user:".$secret_user;
       $I->amOnPage('/user');
       $I->see('Log in');
-      $I->fillField('name', 'admin');
-      $I->fillField('pass', 'n^(+mm4LQbM]<LhK;^5{Zuj|Gp6yzshf');
+      $I->fillField('name', $secret_user);
+      $I->fillField('pass', $secret_password);
       $I->click('op');
       $I->see('CiviCRM');
       $I->amOnPage('/civicrm');
