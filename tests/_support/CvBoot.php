@@ -27,19 +27,19 @@
 class CvBoot extends \Codeception\Extension {
   const DEFAULT_DUMMY_URL = 'http://localhost/myapp';
 
-  public static $events = array(
+  public static $events = [
     'suite.before' => 'beforeSuite',
     'test.before' => 'beforeTest',
-  );
+  ];
 
-  public static $defaults = array(
+  public static $defaults = [
     // How far to go in bootstrapping Civi?
     'command' => 'cv php:boot --level=settings',
 
     // If any acceptance tests ar configured for dummy_url, they
     // will be updated with the real URL.
     'dummy_url' => 'http://localhost/myapp',
-  );
+  ];
 
   /**
    * @var string|null
@@ -55,9 +55,9 @@ class CvBoot extends \Codeception\Extension {
       $phpBrowser = $this->getModule('PhpBrowser');
       if ($this->isDummyUrl($phpBrowser->_getConfig('url'))) {
         //$this->writeln("\n\ALTER PhpBrowser.url\n\n");
-        $phpBrowser->_reconfigure(array(
+        $phpBrowser->_reconfigure([
           'url' => $this->getStartUrl(),
-        ));
+        ]);
       }
     }
     if (in_array('WebDriver', $this->getCurrentModuleNames())) {
@@ -65,9 +65,9 @@ class CvBoot extends \Codeception\Extension {
       $webDriver = $this->getModule('WebDriver');
       if ($this->isDummyUrl($webDriver->_getConfig('url'))) {
         //$this->writeln("\n\ALTER WebDriver.url\n\n");
-        $webDriver->_reconfigure(array(
+        $webDriver->_reconfigure([
           'url' => $this->getStartUrl(),
-        ));
+        ]);
       }
     }
   }
